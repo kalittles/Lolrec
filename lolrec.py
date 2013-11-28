@@ -117,6 +117,7 @@ def StatScrape(champs, map):
 		#Fix this
 	
 	lookup = {}
+	table = {}
 	for x in champions:
 		var = champions[x]["name"]
 		#Map back 
@@ -124,26 +125,38 @@ def StatScrape(champs, map):
 		td_name = soup.find('td',{"data-sortval":var})
 		tr = td_name.parent
 		print x
-		pr = tr.find_all('td',recursive=False)[3].text
-		wr = tr.find_all('td',recursive=False)[4].text
-		br = tr.find_all('td',recursive=False)[5].text
+		pr = (tr.find_all('td',recursive=False)[3].text).strip('%')
+		wr = (tr.find_all('td',recursive=False)[4].text).strip('%')
+		br = (tr.find_all('td',recursive=False)[5].text).strip('%')
+		
+		
 		print "Pickrate: " + pr
 		print "Winrate: " + wr
 		print "Banrate: " + br
-	#hase1 = soup.find_all('tr')
-	#rint phase1.find_next_siblings("a")
-	#main = soup.find('table', {'class':'clientsort champion-list'})
-	#champ = main.find('td', {'data-sortval':'Ahri'})
-	
+		
+		table[x] = {}
+		table[x]['pr'] = pr
+		table[x]['wr'] = wr
+		table[x]['br'] = br
+	return table
 
+def tempRank(table):
+	ranked = {}
+	for x in table:
+		print table[x]['wr']
+		rank = float(table[x]['wr']) - float(table[x]['br']) * (.25*float(table[x]['pr']))
+		ranked[x] = rank
+	print ranked
 	
 class Ranker:
 	def __init__(self, champions):
-		self.champions = ["Na","Mayn"]
+		print "hi"
 		#thinking winrate - banrate + popularity
+
 
 
 if __name__=="__main__":
 	champs = retrieveRecent("nocx")
 	corechamps = retrieveChampions(champs, generateMapping() )
-	StatScrape(corechamps, generateMapping)
+	table = StatScrape(corechamps, generateMapping)
+	tempRank(table)
