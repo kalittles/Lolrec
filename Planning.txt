@@ -1,0 +1,51 @@
+Requires Python 2.7+
+
+PLANNING
+
+1) Make call to get champion's most recently played
+2) Create a list with those champions
+3) Call Riot's champion list. Extract champions of the same role as the recent champions and put that into a dictionary where the 
+recent champion is the key and the champions that share his/her role are the values (as a list)
+4) Go back to LolKing. Pull down Win Rate/Ban Rate/Pick Rate for all champions per key. Only those champions will be put into consideration.
+Make new dictionary where champion being recommended for is the key, teh value is a list of dictionaries of champion being recommended and some score
+5) Use bullshit algorithm to rnak
+
+Structure of recentmatches call to MASHAPE api
+
+Keys:
+requesttime
+success
+shard
+player
+data
+
+Keys of Data:
+
+dataversion
+gamestatistics
+futuredata
+userId
+Success
+libteemorecentgamesjson
+playergamestatsmap
+
+Gamestastics is a List of Dictionaries.
+Each dictionary has the following keys:
+[u'rating', u'queueType', u'dataVersion', u'gameMode', u'skinIndex', u'skinName', u'leveledUp', u'subType', u'teamId', u
+'eligibleFirstWinOfDay', u'premadeSize', u'ipEarned', u'ratingAdjustmentFlags', u'adjustedRating', u'gameTypeEnum', u'st
+atistics', u'difficultyString', u'afk', u'createDate', u'boostIpEarned', u'invalid', u'id', u'voterRating', u'KCoefficie
+nt', u'premadeTeam', u'summonerId', u'gameId', u'rawStatsJson', u'userServerPing', u'futureData', u'userId', u'difficult
+y', u'ranked', u'timeInQueue', u'championId', u'eloChange', u'spell1', u'spell2', u'fellowPlayers', u'level', u'leaver',
+ u'gameType', u'gameMapId', u'experienceEarned', u'boostXpEarned', u'predictedWinPct', u'teamRating']
+ 
+ The champion call has the keys:
+ data version type format
+ 
+ keys of data:
+ champion names
+ 
+When looking up a champion name, you get keys:
+[u'info', u'stats', u'name', u'title', u'image', u'tags', u'partype', u'version', u'key', u'id', u'blurb']
+tags being the roles
+
+I want core champions that show the champion's name as a key, and the value will be a list of champions that match the role
